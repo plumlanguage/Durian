@@ -1,0 +1,1 @@
+nuitka --standalone --onefile --remove-output --output-dir=win_x64_build durian.py
