@@ -1,5 +1,6 @@
 import sys
 import link
+import link.Data as data
 
 def main():
     # 获取命令行数据
@@ -10,7 +11,9 @@ def main():
             # 数据（完整）：
             # NEW CLASS <类的名字>
             #  0     1      2
-            link.Class.new(x[2])
+            data.Class.new(x[2])
+        elif x[1] == "CLASSES": # 功能分支-多个类
+            pass
 
     elif x[0] == "INIT":  # 功能分支-初始化
         # 初始化仓库
