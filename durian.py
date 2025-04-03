@@ -8,9 +8,6 @@ def main():
     # 判断对应功能
     if x[0] == "NEW":  # 功能分支-创建
         if x[1] == "CLASS":  # 功能分支-类
-            # 数据（完整）：
-            # NEW CLASS <类的名字>
-            #  0     1      2
             data.Class.new(x[2])
         elif x[1] == "CLASSES": # 功能分支-多个类
             pass
