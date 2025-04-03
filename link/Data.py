@@ -110,3 +110,7 @@ class X:
     def getXTextToRet(x_path):
         open(Path(link.path_root, "ret.utf-8"), 'w+', encoding='utf-8').write(link.Data.X.getXText(x_path))
 
+    @staticmethod
+    def delX(x_path):
+        os.remove(x_path)
+
