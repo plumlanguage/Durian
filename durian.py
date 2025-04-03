@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -59,6 +60,18 @@ def main():
             link.Data.Class.delClass(x[2])
         elif x[1] == "CLASSES":
             link.Data.Class.delClasses(x[2::])
+        elif x[1] == "X":
+            if x[2] == "-F":
+                class_name = x[3]
+                x_name = x[4]
+                while True:
+                    us_input = input(f"确定删除{x_name}?[t/f]:")
+                    if us_input == "t" or us_input == "T":
+                        link.Data.X.delX(Path(link.path_root, class_name, x_name + ".x"))
+                        link.logger.info(f"删除单值文件 => {x_name}")
+                    elif us_input == "f" or us_input == "F":
+                        link.logger.info("取消删除单值文件")
+
         else:
             link.logger.error(f"输入了位置命令 => {''.join(x)}")
             print("ERR")
