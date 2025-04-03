@@ -39,3 +39,27 @@ class Class:
             return True
         else:
             return False
+
+    @staticmethod
+    def delClass(class_name):
+        """
+        删除单个类
+        :param class_name: 类名
+        :return: True | False
+        """
+        pass
+        # 先pass，因为我不会~
+
+    @staticmethod
+    def delClasses(classes_name):
+        """
+        删除多个类
+        :param classes_name: 类名
+        :return: True | False
+        """
+        if isinstance(classes_name, list):
+            for i in classes_name:
+                link.Data.Class.delClass(i)
+                return True
+        else:
+            return False
