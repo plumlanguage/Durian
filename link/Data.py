@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import link
 import os
 
@@ -63,3 +65,48 @@ class Class:
                 return True
         else:
             return False
+
+class X:
+    @staticmethod
+    def newX(x_path):
+        """
+        创建x文件
+        :param x_path: 路径
+        :return:
+        """
+        try:
+            open(x_path, 'w+', encoding='utf-8').close()
+            link.logger.info(f"单值数据创建成功 => {x_path}")
+            return True
+        except Exception as e:
+            link.logger.error(f"单值数据创建出错 => {e}")
+            return False
+
+    @staticmethod
+    def fixX(x_path, test):
+        try:
+            open(x_path, 'w', encoding='utf-8').write(test)
+            link.logger.info(f"单值数据修改成功 => {x_path}")
+            return True
+        except Exception as e:
+            link.logger.error(f"单值数据修改出错 => {e}")
+            return False
+
+    @staticmethod
+    def getXText(x_path):
+        try:
+            text = open(x_path, 'r', encoding='utf-8')
+            link.logger.info(f"单值数据获取成功 => {text}")
+            return text.read()
+        except Exception as e:
+            link.logger.error(f"单值数据获取出错 => {e} ({x_path})")
+            return False
+
+    @staticmethod
+    def getXTextToShell(x_path):
+        print(link.Data.X.getXText(x_path))
+
+    @staticmethod
+    def getXTextToRet(x_path):
+        open(Path(link.path_root, "ret.utf-8"), 'w+', encoding='utf-8').write(link.Data.X.getXText(x_path))
+
