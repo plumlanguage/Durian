@@ -1,9 +1,9 @@
 from pathlib import Path
-
 import link
 import os
+import link.chk
 
-path_root = "./durianData"
+path_root = link.path_root
 
 class Class:
     @staticmethod
@@ -43,14 +43,23 @@ class Class:
             return False
 
     @staticmethod
-    def delClass(class_name):
+    def delClass(class_name: str) -> bool:
         """
         删除单个类
         :param class_name: 类名
         :return: True | False
         """
-        pass
-        # 先pass，因为我不会~
+        if link.chk.Class.chkClass(class_name):
+            try:
+                os.rmdir(Path(path_root, class_name))
+                link.logger.info(f"删除类成功")
+                return True
+            except Exception as e:
+                link.logger.error(f"类删除失败 => {e}")
+                return False
+        else:
+            link.logger.warning(f"路径不存在或代码出现错误")
+            return False
 
     @staticmethod
     def delClasses(classes_name):
@@ -60,6 +69,7 @@ class Class:
         :return: True | False
         """
         if isinstance(classes_name, list):
+            link.logger.test(f"delClasses::classes_name => {classes_name}")
             for i in classes_name:
                 link.Data.Class.delClass(i)
                 return True
@@ -68,19 +78,23 @@ class Class:
 
 class X:
     @staticmethod
-    def newX(x_path):
+    def newX(class_name, x_name):
         """
         创建x文件
-        :param x_path: 路径
+        :param class_name: 单值所在类
+        :param x_name: 单值名字
         :return:
         """
-        try:
-            open(x_path, 'w+', encoding='utf-8').close()
-            link.logger.info(f"单值数据创建成功 => {x_path}")
-            return True
-        except Exception as e:
-            link.logger.error(f"单值数据创建出错 => {e}")
-            return False
+        if link.chk.X.chkX(class_name, x_name):
+            link.Logger.info(f"单值文件已经存在了 => {x_name}")
+        else:
+            try:
+                open(Path(path_root, class_name, x_name), 'w+', encoding='utf-8').close()
+                link.logger.info(f"单值数据创建成功 => {x_name}")
+                return True
+            except Exception as e:
+                link.logger.error(f"单值数据创建出错 => {e}")
+                return False
 
     @staticmethod
     def fixX(x_path, test):
@@ -111,6 +125,15 @@ class X:
         open(Path(link.path_root, "ret.utf-8"), 'w+', encoding='utf-8').write(link.Data.X.getXText(x_path))
 
     @staticmethod
-    def delX(x_path):
-        os.remove(x_path)
+    def delX(class_name, x_path):
+        if link.chk.X.chkX(class_name, x_path):
+            try:
+                os.remove(Path(class_name, x_path))
+                link.logger.info(f"删除单值成功")
+                return True
+            except Exception as e:
+                link.logger.error(f"类删除单值失败 => {e}")
+                return False
+        else:
+            link.logger.error("单值路径不存在？")
 
