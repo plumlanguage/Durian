@@ -56,6 +56,10 @@ class Logger:
     def error(self, message):
         """记录错误日志"""
         self.log(message, "ERROR")
+
+    def test(self, message):
+        """记录测试日志"""
+        self.log(message, "TEST")
 # 创建全局的日志实例
 logger = Logger("./app.log")
 
