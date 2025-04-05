@@ -3,9 +3,12 @@ import sys
 from pathlib import Path
 
 import link
+import link.chk
 import link.Data as data
 
 def main():
+    print(f"WorkPath -> {os.getcwd()}")
+    # print(os.system("dir"))
     # 获取命令行数据
     x = sys.argv[1::]
     # 判断对应功能
@@ -16,7 +19,7 @@ def main():
             data.Class.newClasses(x[2::])
         elif x[1] == "X": # 功能分支-单值
             if x[2] == "-F": # 配置-来自<类>   durian NEW X -F <类名> <x文件名>
-                link.Data.X.newX(Path(link.path_root, x[3], x[4] + ".x"))
+                link.Data.X.newX(x[3], x[4] + ".x")
             else:
                 link.logger.warning("命令输入出现缺失")
                 print("这里支持输入的命令:\n-F")
@@ -29,7 +32,7 @@ def main():
             if x[2] == "-F": # durian FIX X -F <类名> <x文件名> <新内容>
                 class_name = x[3]
                 x_name = x[4] + ".x"
-                new_test = x[5]
+                new_test = "".join(x[5::])
                 link.Data.X.fixX(Path(link.path_root, class_name, x_name), new_test)
             else:
                 link.logger.error(f"输入了位置命令 => {''.join(x)}")
@@ -64,13 +67,12 @@ def main():
             if x[2] == "-F":
                 class_name = x[3]
                 x_name = x[4]
-                while True:
-                    us_input = input(f"确定删除{x_name}?[t/f]:")
-                    if us_input == "t" or us_input == "T":
-                        link.Data.X.delX(Path(link.path_root, class_name, x_name + ".x"))
-                        link.logger.info(f"删除单值文件 => {x_name}")
-                    elif us_input == "f" or us_input == "F":
-                        link.logger.info("取消删除单值文件")
+                # link.Data.X.delX(f"{link.path_root}/{class_name}",  "/" + x_name + ".x" )
+                try:
+                    os.remove(Path(link.path_root, class_name, x_name + ".x"))
+                    link.logger.info(f"成功删除单值文件 => {Path(link.path_root, class_name, x_name + '.x')}")
+                except Exception as e:
+                    link.logger.error(f"单值文件删除错误 => {e}")
 
         else:
             link.logger.error(f"输入了位置命令 => {''.join(x)}")
